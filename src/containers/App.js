@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Button } from 'antd';
 
-import GarageTable from '../garageTable/garageTable';
-import AddCar from '../addCar/addCar';
+import GarageTable from '../GarageTable/GarageTable';
+import AddCar from '../AddCar/AddCar';
 import classes from './App.module.css';
 import 'antd/dist/antd.css';
 
@@ -12,9 +12,10 @@ class App extends Component {
       {
         key: -1,
         owner: '',
-        age: -1,
+        dateOfBirth: -1,
         address: '',
         car: '',
+        color: '',
       },
     ],
     columns: [
@@ -33,23 +34,26 @@ class App extends Component {
         {
           key: 1,
           owner: 'John Brown',
-          age: 32,
+          dateOfBirth: '1990-02-09',
           address: 'New York No. 1 Lake Park',
           car: 'Mers',
+          color: 'red',
         },
         {
           key: 2,
           owner: 'Jim Green',
-          age: 42,
+          dateOfBirth: '1990-02-09',
           address: 'London No. 1 Lake Park',
           car: 'BMW',
+          color: '',
         },
         {
           key: 3,
           owner: 'Joe Black',
-          age: 32,
+          dateOfBirth: '1990-02-09',
           address: 'Sidney No. 1 Lake Park',
           car: 'Lambo',
+          color: '',
         },
       ],
       columns: [
@@ -64,9 +68,9 @@ class App extends Component {
           key: 'owner',
         },
         {
-          title: 'Age',
-          dataIndex: 'age',
-          key: 'age',
+          title: 'Date Of Birth',
+          dataIndex: 'dateOfBirth',
+          key: 'dateOfBirth',
         },
         {
           title: 'Address',
@@ -82,18 +86,28 @@ class App extends Component {
     });
   }
 
+  getGarages = () => {
+    return this.state.garages.slice();
+  };
+
+  getColumns = () => {
+    return this.state.columns.slice();
+  };
+
   showAddCar = () => {
     this.setState({
       showAddCar: true,
     });
   };
 
-  handleOk = (props) => {
+  handleOk = (newGarage) => {
     const garages = this.state.garages.slice();
-    const keyArr = garages.map(garage => garage.key);
+    const keyArr = garages.map((garage) => garage.key);
     const nextId = Math.max(...keyArr) + 1;
-    props.key = nextId;
-    garages.push(props);
+
+    newGarage.key = nextId;
+    garages.push(newGarage);
+
     this.setState({
       garages: garages,
       showAddCar: false,
@@ -101,7 +115,6 @@ class App extends Component {
   };
 
   handleCancel = () => {
-    console.log('Cancel');
     this.setState({
       showAddCar: false,
     });
@@ -131,10 +144,7 @@ class App extends Component {
           Add new car
         </Button>
         {addCar}
-        <GarageTable
-          garages={this.state.garages}
-          columns={this.state.columns}
-        />
+        <GarageTable garages={this.getGarages()} columns={this.getColumns()} />
       </div>
     );
   }
