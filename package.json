@@ -44,6 +44,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-redux": "^7.1.16",
     "typings-for-css-modules-loader": "^1.7.0"
   }
 }

@@ -1,8 +1,8 @@
 import { Table } from 'antd';
 import React, { Component } from 'react';
 
-import { GarageColumn } from '../shared/garage-column.model';
-import { Garage } from '../shared/garage.model';
+import { GarageColumn } from './../../shared/garage-column.model';
+import { Garage } from './../../shared/garage.model';
 import classes from './garage-table.module.css';
 
 interface IProps {

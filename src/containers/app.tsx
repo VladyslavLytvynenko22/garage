@@ -1,85 +1,50 @@
 import React, { Component } from 'react';
 import { Button } from 'antd';
+import { connect } from 'react-redux';
 
-import GarageTable from '../garage-table/garage-table';
-import AddCar from '../add-car/add-car';
-import classes from './app.module.css';
+import GarageTable from './../components/garage-table/garage-table';
+import AddCar from './../components/add-car/add-car';
+import { Garage } from './../shared/garage.model';
+import { GarageColumn } from './../shared/garage-column.model';
 import Results from './results';
-import { Garage } from '../shared/garage.model';
-import { GarageColumn } from '../shared/garage-column.model';
+import classes from './app.module.css';
 import 'antd/dist/antd.css';
 
-class App extends Component {
-  garage: Garage[] = new Garage(-1, '', '', [''], '', '');
-  garageColumn: GarageColumn[] = new GarageColumn('', '', '');
-  state = {
-    garages: this.garage,
-    columns: this.garageColumn,
-    showAddCar: false,
-  };
+interface IAppProps {
+  garages: Garage[];
+  columns: GarageColumn[];
+  showAddCar: boolean;
+  onChangeGarages: (garages: Garage[]) => void;
+  onChangeGarageColumn: (columns: GarageColumn[]) => void;
+  onChangeShowAddCar: (showAddCar: boolean) => void;
+}
 
+class App extends Component<IAppProps> {
   componentDidMount() {
     Results.get('/state.json').then((res) => {
-      this.setState({
-        garages: res.data.garages,
-        columns: res.data.columns,
-      });
+      this.props.onChangeGarages(res.data.garages);
+      this.props.onChangeGarageColumn(res.data.columns);
     });
   }
 
   getGarages = () => {
-    return this.state.garages.slice();
+    return this.props.garages.slice();
   };
 
   getColumns = () => {
-    return this.state.columns.slice();
+    return this.props.columns.slice();
   };
 
-  showAddCar = () => {
-    this.setState({
-      showAddCar: true,
-    });
-  };
-
-  handleOk = (newGarage: Garage) => {
-    const garages = this.state.garages.slice();
-    const keyArr = garages.map((garage) => garage.key);
-    const nextId = Math.max(...keyArr) + 1;
-
-    newGarage.key = nextId;
-    garages.push(newGarage);
-
-    this.setState({
-      garages: garages,
-      showAddCar: false,
-    });
-
-    // Results.put('/state.json', {
-    //   garages: garages,
-    //   columns: this.state.columns,
-    // }).then((res) => {
-    //   console.log(res);
-    // });
-  };
-
-  handleCancel = () => {
-    this.setState({
-      showAddCar: false,
-    });
+  getShowAddCar = () => {
+    return this.props.showAddCar;
   };
 
   render() {
     let addCar = null;
-    let showAddCar = this.state.showAddCar;
+    let showAddCar = this.getShowAddCar();
 
     if (showAddCar) {
-      addCar = (
-        <AddCar
-          showAddCar={showAddCar}
-          clickOk={this.handleOk}
-          clickCancel={this.handleCancel}
-        />
-      );
+      addCar = <AddCar />;
     }
 
     return (
@@ -87,7 +52,7 @@ class App extends Component {
         <Button
           className={classes.Button}
           type="primary"
-          onClick={this.showAddCar}
+          onClick={() => this.props.onChangeShowAddCar(true)}
         >
           Add new car
         </Button>
@@ -98,4 +63,37 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state: {
+  garages: Garage[];
+  columns: GarageColumn[];
+  showAddCar: boolean;
+}) => {
+  return {
+    garages: state.garages,
+    columns: state.columns,
+    showAddCar: state.showAddCar,
+  };
+};
+
+const mapDispatchToProps = (
+  dispatch: (arg0: {
+    type: string;
+    garages?: Garage[];
+    columns?: GarageColumn[];
+    showAddCar?: boolean;
+  }) => any
+) => {
+  return {
+    onChangeGarages: (garages: Garage[]) =>
+      dispatch({ type: '[GARAGES]_CHANGE', garages: garages }),
+    onChangeGarageColumn: (columns: GarageColumn[]) =>
+      dispatch({ type: '[COLUMNS]_CHANGE', columns: columns }),
+    onChangeShowAddCar: (showAddCar: boolean) =>
+      dispatch({
+        type: '[SHOW_ADD_CAR]_CHANGE',
+        showAddCar: showAddCar,
+      }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
