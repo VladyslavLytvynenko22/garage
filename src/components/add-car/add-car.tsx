@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { Garage } from './../../shared/garage.model';
 import NewData from './new-data/new-data';
+import * as actions from './../../store/actions';
 
 interface IAddCarProps {
   showAddCar: boolean;
@@ -54,11 +55,11 @@ const mapDispatchToProps = (
 ) => {
   return {
     onChangeGarage: (garage: Garage) =>
-      dispatch({ type: '[GARAGE]_CHANGE', garage: garage }),
-    saveGarage: () => dispatch({ type: '[GARAGE]_SAVE' }),
+      dispatch({ type: actions.GARAGE_CHANGE, garage: garage }),
+    saveGarage: () => dispatch({ type: actions.GARAGE_SAVE }),
     onChangeShowAddCar: (showAddCar: boolean) =>
       dispatch({
-        type: '[SHOW_ADD_CAR]_CHANGE',
+        type: actions.SHOW_ADD_CAR_CHANGE,
         showAddCar: showAddCar,
       }),
   };

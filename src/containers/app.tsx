@@ -7,6 +7,7 @@ import AddCar from './../components/add-car/add-car';
 import { Garage } from './../shared/garage.model';
 import { GarageColumn } from './../shared/garage-column.model';
 import Results from './results';
+import * as actions from './../store/actions';
 import classes from './app.module.css';
 import 'antd/dist/antd.css';
 
@@ -85,12 +86,12 @@ const mapDispatchToProps = (
 ) => {
   return {
     onChangeGarages: (garages: Garage[]) =>
-      dispatch({ type: '[GARAGES]_CHANGE', garages: garages }),
+      dispatch({ type: actions.GARAGES_CHANGE, garages: garages }),
     onChangeGarageColumn: (columns: GarageColumn[]) =>
-      dispatch({ type: '[COLUMNS]_CHANGE', columns: columns }),
+      dispatch({ type: actions.COLUMNS_CHANGE, columns: columns }),
     onChangeShowAddCar: (showAddCar: boolean) =>
       dispatch({
-        type: '[SHOW_ADD_CAR]_CHANGE',
+        type: actions.SHOW_ADD_CAR_CHANGE,
         showAddCar: showAddCar,
       }),
   };

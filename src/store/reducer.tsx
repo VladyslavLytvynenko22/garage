@@ -1,6 +1,7 @@
 import { GarageColumn } from '../shared/garage-column.model';
 import { Garage } from '../shared/garage.model';
 import Results from './../containers/results';
+import * as actions from './actions';
 
 class MyState {
   constructor(
@@ -29,12 +30,12 @@ const reducer = (
   }
 ) => {
   switch (action.type) {
-    case '[GARAGE]_CHANGE':
+    case actions.GARAGE_CHANGE:
       return {
         ...state,
         garage: action.garage,
       };
-    case '[GARAGE]_SAVE':
+    case actions.GARAGE_SAVE:
       const garages = state.garages.slice();
       const keyArr = garages.map((garage) => garage.key);
       const nextId = Math.max(...keyArr) + 1;
@@ -48,17 +49,17 @@ const reducer = (
         ...state,
         garages: state.garages.concat(state.garage),
       };
-    case '[GARAGES]_CHANGE':
+    case actions.GARAGES_CHANGE:
       return {
         ...state,
         garages: action.garages,
       };
-    case '[COLUMNS]_CHANGE':
+    case actions.COLUMNS_CHANGE:
       return {
         ...state,
         columns: action.columns,
       };
-    case '[SHOW_ADD_CAR]_CHANGE':
+    case actions.SHOW_ADD_CAR_CHANGE:
       return {
         ...state,
         showAddCar: action.showAddCar,
