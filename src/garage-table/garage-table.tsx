@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 import { GarageColumn } from '../shared/garage-column.model';
 import { Garage } from '../shared/garage.model';
-import * as classes from './garage-table.css';
+import classes from './garage-table.module.css';
 
 interface IProps {
   garages: Garage[];

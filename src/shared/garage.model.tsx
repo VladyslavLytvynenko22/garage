@@ -5,7 +5,7 @@ export class Garage extends Array {
     public address: string,
     public car: string[],
     public color: string,
-    public dateOfBirth?: Date
+    public dateOfBirth: string
   ) {
     super();
   }

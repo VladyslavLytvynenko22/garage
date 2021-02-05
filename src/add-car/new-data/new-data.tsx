@@ -3,7 +3,7 @@ import { CascaderOptionType } from 'antd/lib/cascader';
 import React, { Component } from 'react';
 
 import { Garage } from '../../shared/garage.model';
-import classes from './new-data.css';
+import classes from './new-data.module.css';
 
 interface IProps {
   garage: Garage;
@@ -72,7 +72,7 @@ class NewData extends Component<IProps> {
             onChange={(date, dateString) => {
               this.props.onChangeGarage({
                 ...this.props.garage,
-                dateOfBirth: date?.toDate(),
+                dateOfBirth: dateString,
               });
             }}
           />

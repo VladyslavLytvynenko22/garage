@@ -11,7 +11,7 @@ interface IProps {
 }
 
 class AddCar extends Component<IProps> {
-  garage: Garage = new Garage(-1, '', '', [''], '', new Date());
+  garage: Garage = new Garage(-1, '', '', [''], '', '');
   state = {
     garage: this.garage,
   };

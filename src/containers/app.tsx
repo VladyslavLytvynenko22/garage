@@ -3,14 +3,14 @@ import { Button } from 'antd';
 
 import GarageTable from '../garage-table/garage-table';
 import AddCar from '../add-car/add-car';
-import * as classes from './app.css';
+import classes from './app.module.css';
 import Results from './results';
 import { Garage } from '../shared/garage.model';
 import { GarageColumn } from '../shared/garage-column.model';
 import 'antd/dist/antd.css';
 
 class App extends Component {
-  garage: Garage[] = new Garage(-1, '', '', [''], '', new Date());
+  garage: Garage[] = new Garage(-1, '', '', [''], '', '');
   garageColumn: GarageColumn[] = new GarageColumn('', '', '');
   state = {
     garages: this.garage,
@@ -54,12 +54,12 @@ class App extends Component {
       showAddCar: false,
     });
 
-    Results.put('/state.json', {
-      garages: garages,
-      columns: this.state.columns,
-    }).then((res) => {
-      console.log(res);
-    });
+    // Results.put('/state.json', {
+    //   garages: garages,
+    //   columns: this.state.columns,
+    // }).then((res) => {
+    //   console.log(res);
+    // });
   };
 
   handleCancel = () => {
