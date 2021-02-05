@@ -1,31 +1,20 @@
 import React, { Component } from 'react';
 import { Button } from 'antd';
 
-import GarageTable from '../GarageTable/GarageTable';
-import AddCar from '../AddCar/AddCar';
-import classes from './App.module.css';
-import Results from './Results';
+import GarageTable from '../garage-table/garage-table';
+import AddCar from '../add-car/add-car';
+import * as classes from './app.css';
+import Results from './results';
+import { Garage } from '../shared/garage.model';
+import { GarageColumn } from '../shared/garage-column.model';
 import 'antd/dist/antd.css';
 
 class App extends Component {
+  garage: Garage[] = new Garage(-1, '', '', [''], '', new Date());
+  garageColumn: GarageColumn[] = new GarageColumn('', '', '');
   state = {
-    garages: [
-      {
-        key: -1,
-        owner: '',
-        dateOfBirth: -1,
-        address: '',
-        car: '',
-        color: '',
-      },
-    ],
-    columns: [
-      {
-        title: '',
-        dataIndex: '',
-        key: '',
-      },
-    ],
+    garages: this.garage,
+    columns: this.garageColumn,
     showAddCar: false,
   };
 
@@ -52,7 +41,7 @@ class App extends Component {
     });
   };
 
-  handleOk = (newGarage) => {
+  handleOk = (newGarage: Garage) => {
     const garages = this.state.garages.slice();
     const keyArr = garages.map((garage) => garage.key);
     const nextId = Math.max(...keyArr) + 1;
@@ -80,7 +69,7 @@ class App extends Component {
   };
 
   render() {
-    let addCar = '';
+    let addCar = null;
     let showAddCar = this.state.showAddCar;
 
     if (showAddCar) {

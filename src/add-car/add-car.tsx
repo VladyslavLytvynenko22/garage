@@ -1,25 +1,26 @@
 import { Modal } from 'antd';
 import React, { Component } from 'react';
 
-import NewData from './NewData/NewData';
+import { Garage } from '../shared/garage.model';
+import NewData from './new-data/new-data';
 
-class AddCar extends Component {
+interface IProps {
+  showAddCar: boolean;
+  clickOk: (newGarage: Garage) => void;
+  clickCancel: () => void;
+}
+
+class AddCar extends Component<IProps> {
+  garage: Garage = new Garage(-1, '', '', [''], '', new Date());
   state = {
-    garage: {
-      key: -1,
-      owner: '',
-      dateOfBirth: -1,
-      address: '',
-      car: '',
-      color: '',
-    },
+    garage: this.garage,
   };
 
   getGarage = () => {
     return { ...this.state.garage };
   };
 
-  onChangeGarageHandler = (newGarage) => {
+  onChangeGarageHandler = (newGarage: Garage) => {
     this.setState({ garage: newGarage });
   };
 
