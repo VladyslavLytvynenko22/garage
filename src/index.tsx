@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { combineReducers, createStore, applyMiddleware } from 'redux';
+import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
 
 import addCarRducer from './store/reducers/add-car';
 import appRducer from './store/reducers/app';
@@ -23,7 +23,13 @@ const logger = (store: any) => {
     };
   };
 };
-const store = createStore(rootReducer, applyMiddleware(logger));
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(logger)));
 
 ReactDOM.render(
   <Provider store={store}>
