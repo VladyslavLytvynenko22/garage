@@ -7,9 +7,10 @@ import AddCar from './../components/add-car/add-car';
 import { Garage } from './../shared/garage.model';
 import { GarageColumn } from './../shared/garage-column.model';
 import Results from './results';
-import * as actions from './../store/actions';
+import * as actions from './../store/actions/actions';
 import classes from './app.module.css';
 import 'antd/dist/antd.css';
+import * as ActionTypes from './../store/actions/action-types';
 
 interface IAppProps {
   garages: Garage[];
@@ -78,25 +79,14 @@ const mapStateToProps = (state: {
   };
 };
 
-const mapDispatchToProps = (
-  dispatch: (arg0: {
-    type: string;
-    garage?: Garage;
-    garages?: Garage[];
-    columns?: GarageColumn[];
-    showAddCar?: boolean;
-  }) => any
-) => {
+const mapDispatchToProps = (dispatch: ActionTypes.DispatchActionType) => {
   return {
     onChangeGarages: (garages: Garage[]) =>
-      dispatch({ type: actions.GARAGES_CHANGE, garages: garages }),
+      dispatch(actions.garagesChange(garages)),
     onChangeGarageColumn: (columns: GarageColumn[]) =>
-      dispatch({ type: actions.COLUMNS_CHANGE, columns: columns }),
+      dispatch(actions.columnsChange(columns)),
     onChangeShowAddCar: (showAddCar: boolean) =>
-      dispatch({
-        type: actions.SHOW_ADD_CAR_CHANGE,
-        showAddCar: showAddCar,
-      }),
+      dispatch(actions.showAddCarChange(showAddCar)),
   };
 };
 

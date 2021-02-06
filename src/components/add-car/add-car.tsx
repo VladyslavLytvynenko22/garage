@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 
 import { Garage } from './../../shared/garage.model';
 import NewData from './new-data/new-data';
-import * as actions from './../../store/actions';
-import { GarageColumn } from '../../shared/garage-column.model';
+import * as actions from './../../store/actions/actions';
+import * as ActionTypes from './../../store/actions/action-types';
 
 interface IAddCarProps {
   showAddCar: boolean;
@@ -20,16 +20,22 @@ class AddCar extends Component<IAddCarProps> {
     return { ...this.props.garage };
   };
 
+  modalOkHandler = () => {
+    this.props.saveGarage(this.props.garage);
+    this.props.onChangeShowAddCar(false);
+  };
+
+  modalCancelHandler = () => {
+    this.props.onChangeShowAddCar(false);
+  };
+
   render() {
     return (
       <Modal
         title="New Car"
         visible={this.props.showAddCar}
-        onOk={() => {
-          this.props.saveGarage(this.props.garage);
-          this.props.onChangeShowAddCar(false);
-        }}
-        onCancel={() => this.props.onChangeShowAddCar(false)}
+        onOk={this.modalOkHandler}
+        onCancel={this.modalCancelHandler}
       >
         <NewData
           garage={this.getGarage()}
@@ -49,25 +55,12 @@ const mapStateToProps = (state: {
   };
 };
 
-const mapDispatchToProps = (
-  dispatch: (arg0: {
-    type: string;
-    garage?: Garage;
-    garages?: Garage[];
-    columns?: GarageColumn[];
-    showAddCar?: boolean;
-  }) => any
-) => {
+const mapDispatchToProps = (dispatch: ActionTypes.DispatchActionType) => {
   return {
-    onChangeGarage: (garage: Garage) =>
-      dispatch({ type: actions.GARAGE_CHANGE, garage: garage }),
-    saveGarage: (garage: Garage) =>
-      dispatch({ type: actions.GARAGE_SAVE, garage: garage }),
+    onChangeGarage: (garage: Garage) => dispatch(actions.garageChange(garage)),
+    saveGarage: (garage: Garage) => dispatch(actions.garageSave(garage)),
     onChangeShowAddCar: (showAddCar: boolean) =>
-      dispatch({
-        type: actions.SHOW_ADD_CAR_CHANGE,
-        showAddCar: showAddCar,
-      }),
+      dispatch(actions.showAddCarChange(showAddCar)),
   };
 };
 

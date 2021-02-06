@@ -1,7 +1,8 @@
-import { GarageColumn } from '../../shared/garage-column.model';
-import { Garage } from '../../shared/garage.model';
-import Results from '../../containers/results';
-import * as actions from '../actions';
+import { GarageColumn } from './../../shared/garage-column.model';
+import { Garage } from './../../shared/garage.model';
+import Results from './../../containers/results';
+import * as actions from './../actions/actions';
+import * as ActionTypes from './../actions/action-types';
 
 class AppState {
   constructor(
@@ -17,31 +18,10 @@ const initialState = new AppState(
   false
 );
 
-const reducer = (
-  state = initialState,
-  action: {
-    type: string;
-    garage: Garage;
-    garages: Garage[];
-    columns: GarageColumn[];
-    showAddCar: boolean;
-  }
-) => {
+const reducer = (state = initialState, action: ActionTypes.ActionType) => {
   switch (action.type) {
     case actions.GARAGE_SAVE:
-      const garages = state.garages.slice();
-      const keyArr = garages.map((garage) => garage.key);
-      const nextId = Math.max(...keyArr) + 1;
-      action.garage.key = nextId;
-
-      Results.put('/state.json', {
-        garages: garages,
-        columns: state.columns,
-      }).then((res) => {});
-      return {
-        ...state,
-        garages: state.garages.concat(action.garage),
-      };
+      return garageSave(state, action.garage);
     case actions.GARAGES_CHANGE:
       return {
         ...state,
@@ -60,6 +40,25 @@ const reducer = (
     default:
       return state;
   }
+};
+
+const garageSave = (state: AppState, garage: Garage) => {
+  const garages = state.garages.slice();
+  const keyArr = garages.map((garage) => garage.key);
+  const nextId = Math.max(...keyArr) + 1;
+  garage.key = nextId;
+
+  garages.push(garage);
+
+  Results.put('/state.json', {
+    garages: garages,
+    columns: state.columns,
+  }).then((res) => {});
+
+  return {
+    ...state,
+    garages: garages,
+  };
 };
 
 export default reducer;
