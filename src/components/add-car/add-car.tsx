@@ -5,13 +5,14 @@ import { connect } from 'react-redux';
 import { Garage } from './../../shared/garage.model';
 import NewData from './new-data/new-data';
 import * as actions from './../../store/actions';
+import { GarageColumn } from '../../shared/garage-column.model';
 
 interface IAddCarProps {
   showAddCar: boolean;
   garage: Garage;
   onChangeGarage: (garage: Garage) => void;
   onChangeShowAddCar: (showAddCar: boolean) => void;
-  saveGarage: () => void;
+  saveGarage: (garage: Garage) => void;
 }
 
 class AddCar extends Component<IAddCarProps> {
@@ -25,7 +26,7 @@ class AddCar extends Component<IAddCarProps> {
         title="New Car"
         visible={this.props.showAddCar}
         onOk={() => {
-          this.props.saveGarage();
+          this.props.saveGarage(this.props.garage);
           this.props.onChangeShowAddCar(false);
         }}
         onCancel={() => this.props.onChangeShowAddCar(false)}
@@ -39,10 +40,12 @@ class AddCar extends Component<IAddCarProps> {
   }
 }
 
-const mapStateToProps = (state: { garage: Garage; showAddCar: boolean }) => {
+const mapStateToProps = (state: {
+  addCarRducer: { garage: Garage; showAddCar: boolean };
+}) => {
   return {
-    garage: state.garage,
-    showAddCar: state.showAddCar,
+    garage: state.addCarRducer.garage,
+    showAddCar: state.addCarRducer.showAddCar,
   };
 };
 
@@ -50,13 +53,16 @@ const mapDispatchToProps = (
   dispatch: (arg0: {
     type: string;
     garage?: Garage;
+    garages?: Garage[];
+    columns?: GarageColumn[];
     showAddCar?: boolean;
   }) => any
 ) => {
   return {
     onChangeGarage: (garage: Garage) =>
       dispatch({ type: actions.GARAGE_CHANGE, garage: garage }),
-    saveGarage: () => dispatch({ type: actions.GARAGE_SAVE }),
+    saveGarage: (garage: Garage) =>
+      dispatch({ type: actions.GARAGE_SAVE, garage: garage }),
     onChangeShowAddCar: (showAddCar: boolean) =>
       dispatch({
         type: actions.SHOW_ADD_CAR_CHANGE,

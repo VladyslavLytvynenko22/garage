@@ -65,20 +65,23 @@ class App extends Component<IAppProps> {
 }
 
 const mapStateToProps = (state: {
-  garages: Garage[];
-  columns: GarageColumn[];
-  showAddCar: boolean;
+  appRducer: {
+    garages: Garage[];
+    columns: GarageColumn[];
+    showAddCar: boolean;
+  };
 }) => {
   return {
-    garages: state.garages,
-    columns: state.columns,
-    showAddCar: state.showAddCar,
+    garages: state.appRducer.garages,
+    columns: state.appRducer.columns,
+    showAddCar: state.appRducer.showAddCar,
   };
 };
 
 const mapDispatchToProps = (
   dispatch: (arg0: {
     type: string;
+    garage?: Garage;
     garages?: Garage[];
     columns?: GarageColumn[];
     showAddCar?: boolean;
