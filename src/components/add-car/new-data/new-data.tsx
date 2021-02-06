@@ -2,7 +2,7 @@ import { Input, DatePicker, Cascader, Select } from 'antd';
 import { CascaderOptionType } from 'antd/lib/cascader';
 import React, { Component } from 'react';
 
-import { Garage } from '../../shared/garage.model';
+import { Garage } from './../../../shared/garage.model';
 import classes from './new-data.module.css';
 
 interface IProps {
@@ -103,7 +103,7 @@ class NewData extends Component<IProps> {
             onChange={(value, option) => {
               this.props.onChangeGarage({
                 ...this.props.garage,
-                car: value.toString().split(', '),
+                car: value.toString(),
               });
             }}
           >
