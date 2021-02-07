@@ -6,16 +6,16 @@ import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
 import addCarRducer from './store/reducers/add-car';
 import appRducer from './store/reducers/app';
 import './index.css';
-import App from './containers/app';
+import App from './containers/App';
 
 const rootElement = document.getElementById('root');
 const rootReducer = combineReducers({
   addCarRducer: addCarRducer,
   appRducer: appRducer,
 });
-const logger = (store: any) => {
-  return (nextArg: any) => {
-    return (action: any) => {
+const logger = (store) => {
+  return (nextArg) => {
+    return (action) => {
       console.log('[Middleware] Dispatching', action);
       const result = nextArg(action);
       console.log('[Middleware] next state', store.getState());
@@ -23,11 +23,6 @@ const logger = (store: any) => {
     };
   };
 };
-declare global {
-  interface Window {
-    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-  }
-}
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   rootReducer,

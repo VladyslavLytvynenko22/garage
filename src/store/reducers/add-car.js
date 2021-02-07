@@ -1,14 +1,12 @@
 import { Garage } from './../../shared/garage.model';
 import * as actions from './../actions/actions';
-import * as ActionTypes from './../actions/action-types';
 
-class AddCarState {
-  constructor(public garage: Garage, public showAddCar: boolean) {}
-}
+const initialState = {
+  garage: new Garage(-1, '', '', '', '', ''),
+  showAddCar: false,
+};
 
-const initialState = new AddCarState(new Garage(-1, '', '', '', '', ''), false);
-
-const reducer = (state = initialState, action: ActionTypes.ActionType) => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actions.GARAGE_CHANGE:
       return {

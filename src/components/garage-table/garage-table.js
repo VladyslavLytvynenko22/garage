@@ -1,17 +1,10 @@
 import { Table } from 'antd';
 import React, { Component } from 'react';
 
-import { GarageColumn } from './../../shared/garage-column.model';
-import { Garage } from './../../shared/garage.model';
 import classes from './garage-table.module.css';
 
-interface IProps {
-  garages: Garage[];
-  columns: GarageColumn[];
-}
-
-class GarageTable extends Component<IProps> {
-  selectRowClassName = (color: string) => {
+class GarageTable extends Component {
+  selectRowClassName = (color) => {
     switch (color) {
       case 'red':
         return classes.RedRow;

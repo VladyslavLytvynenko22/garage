@@ -2,23 +2,16 @@ import { GarageColumn } from './../../shared/garage-column.model';
 import { Garage } from './../../shared/garage.model';
 import Results from './../../containers/results';
 import * as actions from './../actions/actions';
-import * as ActionTypes from './../actions/action-types';
 
-class AppState {
-  constructor(
-    public garages: Garage[],
-    public columns: GarageColumn[],
-    public showAddCar: boolean
-  ) {}
-}
+const initialState = {
+  garages: [
+    new Garage(1, 'NO_DATA1', 'NO_DATA2', 'NO_DATA3', 'NO_DATA4', 'NO_DATA5'),
+  ],
+  columns: [new GarageColumn('NO_DATA1', 'NO_DATA1', 'NO_DATA1')],
+  showAddCar: false,
+};
 
-const initialState = new AppState(
-  [new Garage(1, 'NO_DATA1', 'NO_DATA2', 'NO_DATA3', 'NO_DATA4', 'NO_DATA5')],
-  [new GarageColumn('NO_DATA1', 'NO_DATA1', 'NO_DATA1')],
-  false
-);
-
-const reducer = (state = initialState, action: ActionTypes.ActionType) => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actions.GARAGE_SAVE:
       return garageSave(state, action.garage);
@@ -42,7 +35,7 @@ const reducer = (state = initialState, action: ActionTypes.ActionType) => {
   }
 };
 
-const garageSave = (state: AppState, garage: Garage) => {
+const garageSave = (state, garage) => {
   const garages = state.garages.slice();
   const keyArr = garages.map((garage) => garage.key);
   const nextId = Math.max(...keyArr) + 1;

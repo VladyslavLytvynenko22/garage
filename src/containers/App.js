@@ -4,24 +4,12 @@ import { connect } from 'react-redux';
 
 import GarageTable from './../components/garage-table/garage-table';
 import AddCar from './../components/add-car/add-car';
-import { Garage } from './../shared/garage.model';
-import { GarageColumn } from './../shared/garage-column.model';
 import Results from './results';
 import * as actions from './../store/actions/actions';
-import classes from './app.module.css';
+import classes from './App.module.css';
 import 'antd/dist/antd.css';
-import * as ActionTypes from './../store/actions/action-types';
 
-interface IAppProps {
-  garages: Garage[];
-  columns: GarageColumn[];
-  showAddCar: boolean;
-  onChangeGarages: (garages: Garage[]) => void;
-  onChangeGarageColumn: (columns: GarageColumn[]) => void;
-  onChangeShowAddCar: (showAddCar: boolean) => void;
-}
-
-class App extends Component<IAppProps> {
+class App extends Component {
   componentDidMount() {
     Results.get('/state.json').then((res) => {
       this.props.onChangeGarages(res.data.garages);
@@ -65,13 +53,7 @@ class App extends Component<IAppProps> {
   }
 }
 
-const mapStateToProps = (state: {
-  appRducer: {
-    garages: Garage[];
-    columns: GarageColumn[];
-    showAddCar: boolean;
-  };
-}) => {
+const mapStateToProps = (state) => {
   return {
     garages: state.appRducer.garages,
     columns: state.appRducer.columns,
@@ -79,13 +61,11 @@ const mapStateToProps = (state: {
   };
 };
 
-const mapDispatchToProps = (dispatch: ActionTypes.DispatchActionType) => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    onChangeGarages: (garages: Garage[]) =>
-      dispatch(actions.garagesChange(garages)),
-    onChangeGarageColumn: (columns: GarageColumn[]) =>
-      dispatch(actions.columnsChange(columns)),
-    onChangeShowAddCar: (showAddCar: boolean) =>
+    onChangeGarages: (garages) => dispatch(actions.garagesChange(garages)),
+    onChangeGarageColumn: (columns) => dispatch(actions.columnsChange(columns)),
+    onChangeShowAddCar: (showAddCar) =>
       dispatch(actions.showAddCarChange(showAddCar)),
   };
 };
