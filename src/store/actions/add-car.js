@@ -7,7 +7,8 @@ export const garageSave = (garage) => {
   return { type: Actions.GARAGE_SAVE, garage: garage };
 };
 export const garageStore = (garage) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    console.log(getState().addCarRducer);
     setTimeout(() => {
       dispatch(garageSave(garage));
     }, 2000);
