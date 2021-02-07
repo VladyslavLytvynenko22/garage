@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import NewData from './new-data/new-data';
-import * as actions from './../../store/actions/actions';
+import * as actionCreators from './../../store/actions/index';
 
 class AddCar extends Component {
   getGarage = () => {
@@ -45,10 +45,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onChangeGarage: (garage) => dispatch(actions.garageChange(garage)),
-    saveGarage: (garage) => dispatch(actions.garageStore(garage)),
+    onChangeGarage: (garage) => dispatch(actionCreators.garageChange(garage)),
+    saveGarage: (garage) => dispatch(actionCreators.garageStore(garage)),
     onChangeShowAddCar: (showAddCar) =>
-      dispatch(actions.showAddCarChange(showAddCar)),
+      dispatch(actionCreators.showAddCarChange(showAddCar)),
   };
 };
 

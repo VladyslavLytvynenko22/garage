@@ -1,5 +1,5 @@
 import { Garage } from './../../shared/garage.model';
-import * as actions from './../actions/actions';
+import * as actions from './../actions/action-types';
 
 const initialState = {
   garage: new Garage(-1, '', '', '', '', ''),

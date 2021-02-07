@@ -1,0 +1,5 @@
+export const GARAGE_SAVE = '[GARAGE]_SAVE';
+export const GARAGE_CHANGE = '[GARAGE]_CHANGE';
+export const GARAGES_CHANGE = '[GARAGES]_CHANGE';
+export const COLUMNS_CHANGE = '[COLUMNS]_CHANGE';
+export const SHOW_ADD_CAR_CHANGE = '[SHOW_ADD_CAR]_CHANGE';

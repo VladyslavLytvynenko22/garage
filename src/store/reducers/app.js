@@ -1,7 +1,7 @@
 import { GarageColumn } from './../../shared/garage-column.model';
 import { Garage } from './../../shared/garage.model';
 import Results from './../../containers/results';
-import * as actions from './../actions/actions';
+import * as actions from './../actions/action-types';
 
 const initialState = {
   garages: [

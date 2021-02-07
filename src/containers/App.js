@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import GarageTable from './../components/garage-table/garage-table';
 import AddCar from './../components/add-car/add-car';
 import Results from './results';
-import * as actions from './../store/actions/actions';
+import * as actionCreator from './../store/actions/index';
 import classes from './App.module.css';
 import 'antd/dist/antd.css';
 
@@ -63,10 +63,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onChangeGarages: (garages) => dispatch(actions.garagesChange(garages)),
-    onChangeGarageColumn: (columns) => dispatch(actions.columnsChange(columns)),
+    onChangeGarages: (garages) => dispatch(actionCreator.garagesChange(garages)),
+    onChangeGarageColumn: (columns) => dispatch(actionCreator.columnsChange(columns)),
     onChangeShowAddCar: (showAddCar) =>
-      dispatch(actions.showAddCarChange(showAddCar)),
+      dispatch(actionCreator.showAddCarChange(showAddCar)),
   };
 };
 
