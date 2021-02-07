@@ -10,6 +10,13 @@ export const garageChange = (garage) => {
 export const garageSave = (garage) => {
   return { type: GARAGE_SAVE, garage: garage };
 };
+export const garageStore = (garage) => {
+  return (dispatch) => {
+    setTimeout(() => {
+      dispatch(garageSave(garage));
+    }, 2000);
+  };
+};
 export const garagesChange = (garages) => {
   return { type: GARAGES_CHANGE, garages: garages };
 };

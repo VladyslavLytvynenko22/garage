@@ -46,7 +46,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onChangeGarage: (garage) => dispatch(actions.garageChange(garage)),
-    saveGarage: (garage) => dispatch(actions.garageSave(garage)),
+    saveGarage: (garage) => dispatch(actions.garageStore(garage)),
     onChangeShowAddCar: (showAddCar) =>
       dispatch(actions.showAddCarChange(showAddCar)),
   };
