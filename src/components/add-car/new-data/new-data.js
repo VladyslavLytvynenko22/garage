@@ -1,18 +1,11 @@
 import { Input, DatePicker, Cascader, Select } from 'antd';
-import { CascaderOptionType } from 'antd/lib/cascader';
 import React, { Component } from 'react';
 
-import { Garage } from './../../../shared/garage.model';
 import classes from './new-data.module.css';
 
-interface IProps {
-  garage: Garage;
-  onChangeGarage: (newGarage: Garage) => void;
-}
-
-class NewData extends Component<IProps> {
-  options: CascaderOptionType[] = [];
-  children: CascaderOptionType[] = [];
+class NewData extends Component {
+  options = [];
+  children = [];
 
   componentDidMount() {
     this.options = [

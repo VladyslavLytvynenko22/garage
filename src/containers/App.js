@@ -4,23 +4,12 @@ import { connect } from 'react-redux';
 
 import GarageTable from './../components/garage-table/garage-table';
 import AddCar from './../components/add-car/add-car';
-import { Garage } from './../shared/garage.model';
-import { GarageColumn } from './../shared/garage-column.model';
 import Results from './results';
-import * as actions from './../store/actions';
-import classes from './app.module.css';
+import * as actionCreator from './../store/actions/index';
+import classes from './App.module.css';
 import 'antd/dist/antd.css';
 
-interface IAppProps {
-  garages: Garage[];
-  columns: GarageColumn[];
-  showAddCar: boolean;
-  onChangeGarages: (garages: Garage[]) => void;
-  onChangeGarageColumn: (columns: GarageColumn[]) => void;
-  onChangeShowAddCar: (showAddCar: boolean) => void;
-}
-
-class App extends Component<IAppProps> {
+class App extends Component {
   componentDidMount() {
     Results.get('/state.json').then((res) => {
       this.props.onChangeGarages(res.data.garages);
@@ -64,13 +53,7 @@ class App extends Component<IAppProps> {
   }
 }
 
-const mapStateToProps = (state: {
-  appRducer: {
-    garages: Garage[];
-    columns: GarageColumn[];
-    showAddCar: boolean;
-  };
-}) => {
+const mapStateToProps = (state) => {
   return {
     garages: state.appRducer.garages,
     columns: state.appRducer.columns,
@@ -78,25 +61,12 @@ const mapStateToProps = (state: {
   };
 };
 
-const mapDispatchToProps = (
-  dispatch: (arg0: {
-    type: string;
-    garage?: Garage;
-    garages?: Garage[];
-    columns?: GarageColumn[];
-    showAddCar?: boolean;
-  }) => any
-) => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    onChangeGarages: (garages: Garage[]) =>
-      dispatch({ type: actions.GARAGES_CHANGE, garages: garages }),
-    onChangeGarageColumn: (columns: GarageColumn[]) =>
-      dispatch({ type: actions.COLUMNS_CHANGE, columns: columns }),
-    onChangeShowAddCar: (showAddCar: boolean) =>
-      dispatch({
-        type: actions.SHOW_ADD_CAR_CHANGE,
-        showAddCar: showAddCar,
-      }),
+    onChangeGarages: (garages) => dispatch(actionCreator.garagesChange(garages)),
+    onChangeGarageColumn: (columns) => dispatch(actionCreator.columnsChange(columns)),
+    onChangeShowAddCar: (showAddCar) =>
+      dispatch(actionCreator.showAddCarChange(showAddCar)),
   };
 };
 
