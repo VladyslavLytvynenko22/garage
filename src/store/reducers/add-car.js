@@ -1,5 +1,6 @@
 import { Garage } from './../../shared/garage.model';
 import * as actions from './../actions/action-types';
+import {updateObject} from './../utility';
 
 const initialState = {
   garage: new Garage(-1, '', '', '', '', ''),
@@ -9,15 +10,9 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actions.GARAGE_CHANGE:
-      return {
-        ...state,
-        garage: action.garage,
-      };
+      return updateObject(state, {garage: action.garage});
     case actions.SHOW_ADD_CAR_CHANGE:
-      return {
-        ...state,
-        showAddCar: action.showAddCar,
-      };
+      return updateObject(state, {showAddCar: action.showAddCar});
     default:
       return state;
   }

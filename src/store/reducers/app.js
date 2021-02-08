@@ -2,6 +2,7 @@ import { GarageColumn } from './../../shared/garage-column.model';
 import { Garage } from './../../shared/garage.model';
 import Results from './../../containers/results';
 import * as actions from './../actions/action-types';
+import {updateObject} from './../utility';
 
 const initialState = {
   garages: [
@@ -14,22 +15,13 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actions.GARAGE_SAVE:
-      return garageSave(state, action.garage);
+      return updateObject(state, {garages: garageSave(state, action.garage)});
     case actions.GARAGES_CHANGE:
-      return {
-        ...state,
-        garages: action.garages,
-      };
+      return updateObject(state, {garages: action.garages});
     case actions.COLUMNS_CHANGE:
-      return {
-        ...state,
-        columns: action.columns,
-      };
+      return updateObject(state, {columns: action.columns});
     case actions.SHOW_ADD_CAR_CHANGE:
-      return {
-        ...state,
-        showAddCar: action.showAddCar,
-      };
+      return updateObject(state, {showAddCar: action.showAddCar});
     default:
       return state;
   }
@@ -48,10 +40,7 @@ const garageSave = (state, garage) => {
     columns: state.columns,
   }).then((res) => {});
 
-  return {
-    ...state,
-    garages: garages,
-  };
+  return garages;
 };
 
 export default reducer;
